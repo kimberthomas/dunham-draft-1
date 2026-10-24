@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
 <meta name="theme-color" content="#0c0a09" />
 <title>Project Title: Exploring the Katherine Dunham Collection</title>
-<meta name="description" content="Visitors touch points of light on a photograph of Katherine Dunham, each one opening photographs and film from her collection at the Library of Congress. The order they choose becomes a path across a stage floor that they can keep, and dance if they like." />
+<meta name="description" content="Visitors touch eight points of light on a photograph of Katherine Dunham, each opening a photograph, film, or program from her collection at the Library of Congress. The order they choose becomes an 8-count, drawn as a path across a stage floor." />
 <style>
 @font-face { font-family: 'Poppins'; font-style: italic; font-weight: 200; font-display: swap; src: url("fonts/poppins-200-italic.woff2") format("woff2"); unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD; }
 @font-face { font-family: 'Poppins'; font-style: italic; font-weight: 300; font-display: swap; src: url("fonts/poppins-300-italic.woff2") format("woff2"); unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD; }
@@ -50,8 +50,7 @@
     display: inline-flex; align-items: center; justify-content: center; gap: 8px;
     padding: 12px 22px; border-radius: 999px;
     border: 1px solid var(--bone-faint);
-    background: rgba(12, 10, 9, 0.45);
-    backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
+    background: rgba(12, 10, 9, 0.72);
     font-size: 13px; font-weight: 400; letter-spacing: .04em;
     transition: background .3s, border-color .3s, color .3s, opacity .3s, transform .3s var(--ease);
   }
@@ -61,10 +60,8 @@
   .pill[disabled] { opacity: .35; pointer-events: none; }
 
   #ambient {
-    position: fixed; inset: -60px;
-    background: url("images/dunham-skirt.jpg") center / cover no-repeat;
-    filter: grayscale(1) blur(48px) brightness(.32) contrast(1.1);
-    transform: scale(1.1);
+    position: fixed; inset: 0;
+    background: var(--ink) center / cover no-repeat;
   }
   #stage { position: fixed; inset: 0; overflow: hidden; }
   #stage::after {
@@ -114,22 +111,20 @@
     user-select: none; -webkit-user-drag: none;
   }
   @keyframes breathe { from { transform: scale(1); } to { transform: scale(1.025) translateY(-0.6%); } }
+  body.layer-open #hero, body.layer-open .mark .ring { animation-play-state: paused; }
   #pathSvg { position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; overflow: visible; }
   #pathSvg polyline { fill: none; stroke: var(--ember); stroke-width: 1.6; stroke-linecap: round; stroke-linejoin: round; vector-effect: non-scaling-stroke; filter: drop-shadow(0 0 6px rgba(224,144,74,.7)); }
 
   #spot {
     position: fixed; inset: 0; pointer-events: none; z-index: 2;
-    background: radial-gradient(circle 340px at var(--x) var(--y), rgba(255, 214, 170, .16), rgba(255, 214, 170, .04) 45%, transparent 70%);
-    mix-blend-mode: soft-light;
+    background: radial-gradient(circle 340px at var(--x) var(--y), rgba(255, 214, 170, .07), rgba(255, 214, 170, .02) 45%, transparent 70%);
     opacity: 0; transition: opacity 2s;
   }
   body.awake #spot { opacity: 1; }
   .grain {
-    position: fixed; inset: -50%; z-index: 40; pointer-events: none; opacity: .07;
+    position: fixed; inset: 0; z-index: 40; pointer-events: none; opacity: .07;
     background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='160' height='160'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='3' stitchTiles='stitch'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>");
-    animation: grain 1.2s steps(5) infinite;
   }
-  @keyframes grain { 0%{transform:translate(0,0)} 25%{transform:translate(-3%,2%)} 50%{transform:translate(2%,-3%)} 75%{transform:translate(-2%,-1%)} 100%{transform:translate(1%,3%)} }
 
   .mark {
     position: absolute; width: 44px; height: 44px; margin: -22px 0 0 -22px;
@@ -143,7 +138,7 @@
   .mark .dot {
     width: 12px; height: 12px; border-radius: 50%;
     background: #fff4e4;
-    box-shadow: 0 0 0 1px rgba(255,255,255,.6), 0 0 18px 6px rgba(255, 190, 120, .55);
+    box-shadow: 0 0 18px 6px rgba(255, 190, 120, .55);
     transition: transform .4s var(--ease), background .4s;
   }
   .mark .ring {
@@ -168,8 +163,17 @@
   }
   .mark .tag b { font-weight: 600; color: var(--ember); margin-right: 6px; }
   .mark:hover .tag, .mark:focus-visible .tag { opacity: 1; transform: translate(-50%, 0); }
+  .mark.tag-r .tag { left: calc(100% + 2px); bottom: auto; top: 50%; transform: translate(6px, -50%); }
+  .mark.tag-l .tag { left: auto; right: calc(100% + 2px); bottom: auto; top: 50%; transform: translate(-6px, -50%); }
+  .mark.tag-r:hover .tag, .mark.tag-r:focus-visible .tag,
+  .mark.tag-l:hover .tag, .mark.tag-l:focus-visible .tag { transform: translate(0, -50%); }
+  .mark.bright .dot {
+  background: #fff8ee;
+  box-shadow: 0 0 3px 1px rgba(255, 248, 235, .6), 0 0 18px 6px rgba(255, 180, 105, .68);
+  }
+  .mark.bright .ring { border-color: rgba(255, 230, 200, .85); }
   .mark:hover .dot { transform: scale(1.35); }
-  .mark.seen .dot { width: 20px; height: 20px; background: var(--ember); box-shadow: 0 0 0 1px rgba(255,255,255,.5), 0 0 20px 6px rgba(224,144,74,.55); }
+  .mark.seen .dot { width: 20px; height: 20px; background: var(--ember); box-shadow: 0 0 20px 6px rgba(224,144,74,.55); }
   .mark.seen .num { opacity: 1; }
   .mark.seen .ring { animation: none; opacity: 0; }
 
@@ -199,8 +203,7 @@
     position: fixed; left: 50%; bottom: 46px; transform: translate(-50%, 20px);
     z-index: 6; display: flex; align-items: center; gap: 16px;
     padding: 10px 10px 10px 22px; border-radius: 999px;
-    background: rgba(12,10,9,.66); border: 1px solid var(--bone-faint);
-    backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px);
+    background: rgba(12,10,9,.88); border: 1px solid var(--bone-faint);
     opacity: 0; transition: opacity 1s, transform 1s var(--ease);
     max-width: calc(100vw - 24px);
   }
@@ -209,12 +212,17 @@
   .hero-cite {
     position: fixed; left: 50%; bottom: 16px; transform: translateX(-50%);
     z-index: 6; margin: 0; width: max-content; max-width: calc(100vw - 32px);
-    font-size: 11px; line-height: 1.4; text-align: center; color: var(--bone-dim);
+    font-size: 13px; line-height: 1.4; text-align: center; color: var(--bone-dim);
     opacity: 0; transition: opacity 1s;
   }
   body.on-floor .hero-cite { opacity: 1; }
   .hero-cite a { color: inherit; text-underline-offset: 2px; }
   .hero-cite a:hover, .hero-cite a:focus-visible { color: var(--bone); }
+  .hero-cite .url-short { display: none; }
+  @media (max-width: 600px) {
+    .hero-cite .url-full { display: none; }
+    .hero-cite .url-short { display: inline; }
+  }
   .trail, #trail { display: flex; align-items: center; gap: 6px; }
   .trail .lbl { font-size: 11px; letter-spacing: .2em; text-transform: uppercase; color: var(--bone-dim); margin-right: 6px; white-space: nowrap; }
   .trail i {
@@ -230,8 +238,7 @@
     position: fixed; inset: 0; z-index: 30;
     display: grid; place-items: center;
     padding: clamp(16px, 4vw, 48px);
-    background: rgba(8, 7, 6, .82);
-    backdrop-filter: blur(18px); -webkit-backdrop-filter: blur(18px);
+    background: rgba(8, 7, 6, .94);
     opacity: 0; visibility: hidden; transition: opacity .9s ease, visibility .9s;
   }
   #moment.open { opacity: 1; visibility: visible; }
@@ -255,8 +262,36 @@
   .m-card.has-video .m-photo .frame { aspect-ratio: 720 / 528; height: auto; max-height: 70vh; background: #0f0b09; }
   .m-card.is-wide { grid-template-columns: minmax(0, 1.25fr) minmax(0, 1fr); }
   .m-card.is-wide .m-photo .frame { aspect-ratio: 720 / 569; height: auto; max-height: 70vh; }
+  .m-card.is-book { grid-template-columns: minmax(0, .85fr) minmax(0, 1.15fr); }
+  .m-card.is-book .m-photo .frame {
+    aspect-ratio: 1000 / 1318; height: auto; max-height: none;
+    width: min(100%, calc(66vh * 1000 / 1318)); margin: 0 auto;
+    background: transparent; perspective: 1400px; overflow: visible;
+  }
+  .m-card.is-book .m-photo img {
+    object-fit: contain; filter: none; border-radius: 2px;
+    box-shadow: 0 18px 40px rgba(0,0,0,.55);
+    transform: rotateY(-28deg); transform-origin: left center;
+    transition: opacity .45s ease, transform .6s var(--ease);
+  }
+  .m-card.is-book .m-photo img.back { transform: rotateY(28deg); transform-origin: right center; }
+  .m-pages { display: flex; align-items: center; justify-content: center; gap: 14px; margin-top: 14px; }
+  .m-pages[hidden] { display: none; }
+  .m-pages .pg { width: 40px; height: 40px; padding: 0; }
+  .m-pages .pg svg { display: block; margin: auto; }
+  .pg-num { font-size: 12px; letter-spacing: .08em; color: var(--bone-dim); min-width: 84px; text-align: center; }
   #moment.open .m-photo img.loaded { opacity: 1; transform: scale(1); }
-  .m-photo figcaption { font-size: 11px; line-height: 1.5; color: var(--bone-dim); margin-top: 10px; }
+  .m-photo figcaption { font-size: 13px; line-height: 1.55; color: var(--bone-dim); margin-top: 12px; }
+  .m-card.is-book .m-photo .frame { position: relative; }
+  .m-card.is-book .m-photo img { cursor: zoom-in; }
+  #pageZoom {
+    position: fixed; inset: 0; z-index: 45; overflow: auto; background: rgba(12,9,7,.96);
+    display: none; padding: 72px 16px 40px; overscroll-behavior: contain;
+  }
+  #pageZoom.open { display: block; }
+  #pageZoom img { display: block; width: min(1000px, 100%); height: auto; margin: 0 auto; cursor: zoom-out; }
+  #pageZoom .pill { position: fixed; top: 20px; right: 20px; width: 44px; height: 44px; padding: 0; }
+  .zoom-hint { font-size: 12px; letter-spacing: .08em; color: var(--bone-dim); text-align: center; margin-top: 8px; }
   .m-photo figcaption a { color: var(--bone-dim); }
 
   .m-text > * { opacity: 0; transform: translateY(12px); transition: opacity 1.1s ease, transform 1.1s var(--ease); }
@@ -265,11 +300,20 @@
   #moment.open .m-text > *:nth-child(3) { transition-delay: 1.3s; }
   #moment.open .m-text > *:nth-child(4) { transition-delay: 1.9s; }
   #moment.open .m-text > *:nth-child(5) { transition-delay: 2.4s; }
+  .m-text > .m-actions, #moment.open .m-text > .m-actions { transition-duration: .3s; transition-delay: 0s; }
+  #moment.repeat .m-text > * { transition-duration: .45s; }
+  #moment.repeat.open .m-text > *:nth-child(2) { transition-delay: .08s; }
+  #moment.repeat.open .m-text > *:nth-child(3) { transition-delay: .16s; }
+  #moment.repeat.open .m-text > *:nth-child(4) { transition-delay: 0s; }
   .m-text h2 { font-size: clamp(30px, 3.6vw, 48px); font-weight: 300; line-height: 1.08; letter-spacing: -.025em; margin: 12px 0 20px; text-wrap: balance; }
   .m-text h2 em { font-style: italic; font-weight: 200; color: var(--ember); }
   .m-body p { font-size: 15px; line-height: 1.75; color: rgba(241,234,223,.86); max-width: 58ch; }
   .m-body p + p { margin-top: 14px; }
   .m-body em { font-style: italic; }
+  .m-body .m-quote { margin: 22px 0; padding-left: 18px; border-left: 1px solid rgba(241,234,223,.28); max-width: 52ch; }
+  .m-body .m-quote blockquote p { font-size: 18px; line-height: 1.55; font-style: italic; color: rgba(241,234,223,.95); }
+  .m-body .m-quote figcaption { margin-top: 8px; font-size: 13px; line-height: 1.55; color: var(--bone-dim); }
+  .m-body .m-quote + p { margin-top: 0; }
   .m-actions { display: flex; gap: 10px; margin-top: 24px; flex-wrap: wrap; }
   .m-close { position: fixed; top: 20px; right: 20px; z-index: 31; width: 44px; height: 44px; padding: 0; }
   .m-close svg { display: block; margin: auto; }
@@ -279,8 +323,7 @@
 
   #finale {
     position: fixed; inset: 0; z-index: 25; overflow-y: auto;
-    background: rgba(10, 8, 7, .9);
-    backdrop-filter: blur(22px); -webkit-backdrop-filter: blur(22px);
+    background: rgba(10, 8, 7, .96);
     opacity: 0; visibility: hidden; transition: opacity 1.2s ease, visibility 1.2s;
   }
   #finale.open { opacity: 1; visibility: visible; }
@@ -299,7 +342,7 @@
 
   #about {
     position: fixed; inset: 0; z-index: 35; display: grid; place-items: center; padding: 20px;
-    background: rgba(8,7,6,.85); backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px);
+    background: rgba(8,7,6,.92);
     opacity: 0; visibility: hidden; transition: opacity .5s, visibility .5s;
   }
   #about.open { opacity: 1; visibility: visible; }
@@ -313,7 +356,8 @@
   .a-actions { margin-top: 22px; }
 
   .f-plan-grid { display: flex; flex-wrap: wrap; align-items: center; gap: clamp(28px, 5vw, 64px); margin-top: 36px; }
-  .f-plan { flex: 1 1 420px; display: block; max-width: 640px; height: auto; aspect-ratio: 400 / 292; overflow: visible; }
+  .f-plan-col { flex: 1 1 420px; max-width: 640px; display: flex; flex-direction: column; align-items: center; gap: 40px; }
+  .f-plan { width: 100%; display: block; height: auto; aspect-ratio: 400 / 292; overflow: visible; }
   .f-plan .st { fill: none; stroke: var(--bone-dim); stroke-width: 1.2; stroke-linecap: round; vector-effect: non-scaling-stroke; }
   .f-plan .sd { stroke-dasharray: 3 5; }
   .f-plan .aud { fill: var(--bone-dim); font-size: 9px; font-weight: 500; letter-spacing: .3em; text-transform: uppercase; text-anchor: middle; }
@@ -340,6 +384,8 @@
     .m-card.has-video .m-photo .frame { aspect-ratio: 720 / 528; height: auto; max-height: 44vh; }
     .m-card.is-wide { grid-template-columns: 1fr; }
     .m-card.is-wide .m-photo .frame { aspect-ratio: 720 / 569; height: auto; max-height: 44vh; }
+    .m-card.is-book { grid-template-columns: 1fr; }
+    .m-card.is-book .m-photo .frame { aspect-ratio: 1000 / 1318; height: auto; max-height: none; width: min(100%, calc(48vh * 1000 / 1318)); }
     .hint { bottom: 128px; font-size: 13px; }
     .trail .lbl { display: none; }
     .corner { top: 16px; left: 16px; }
@@ -357,7 +403,7 @@
     .trail i { width: 18px; height: 18px; font-size: 9px; }
     .hud { gap: 10px; padding-left: 14px; bottom: 70px; }
     .hint { bottom: 144px; }
-    .hero-cite { width: auto; font-size: 10.5px; bottom: 12px; }
+    .hero-cite { width: auto; font-size: 13px; bottom: 12px; }
     .hud .pill { padding: 10px 14px; font-size: 12px; }
   }
   @media (prefers-reduced-motion: reduce) {
@@ -415,7 +461,6 @@
     text-align: center;
     transition: opacity .6s ease;
   }
-  #curtain .cue .eyebrow { color: var(--bone-dim); }
   #curtain .cue .title {
     font-weight: 500; text-transform: uppercase; letter-spacing: .32em;
     font-size: clamp(22px, 3.6vw, 40px); line-height: 1.1; color: var(--bone);
@@ -429,7 +474,7 @@
   }
   #curtain .cue .roles { font-size: 12px; color: var(--bone-dim); letter-spacing: .06em; margin-top: -10px; }
   #curtain .cue-actions { display: flex; gap: 10px; flex-wrap: wrap; justify-content: center; }
-  #curtain .cue .pill { white-space: nowrap; background: rgba(12,10,9,.55); backdrop-filter: blur(6px); }
+  #curtain .cue .pill { white-space: nowrap; background: rgba(12,10,9,.7); }
   #curtain .cue .pill.primary { background: var(--bone); color: var(--ink); }
   #curtain.parting .cue { opacity: 0; }
   #curtain.parting .aged,
@@ -493,7 +538,7 @@
   </div>
   <button class="pill primary" id="finishBtn" disabled>Finish</button>
 </nav>
-<p class="hero-cite">Katherine Dunham in the ballet L'Ag'Ya, which premiered in 1938. Photograph. <a href="https://www.loc.gov/item/ihas.200003752/" target="_blank" rel="noopener noreferrer">https://www.loc.gov/item/ihas.200003752/</a>.</p>
+<p class="hero-cite">Katherine Dunham in the ballet L'Ag'Ya, which premiered in 1938. Photograph. <a href="https://www.loc.gov/item/ihas.200003752/" target="_blank" rel="noopener noreferrer"><span class="url-full">https://www.loc.gov/item/ihas.200003752/</span><span class="url-short">loc.gov record</span></a>.</p>
 
 <div id="moment" role="dialog" aria-modal="true" aria-labelledby="mTitle">
   <button class="pill m-close" id="mClose" aria-label="Close and return to the photograph"><svg width="16" height="16" viewBox="0 0 16 16" aria-hidden="true"><path d="M3 3l10 10M13 3L3 13" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></button>
@@ -502,7 +547,14 @@
       <div class="frame">
         <img id="mImg" alt="" />
         <video id="mVid" controls playsinline preload="none"></video>
-          </div>
+      </div>
+      <div class="m-pages" id="mPages" hidden>
+        <button class="pill pg" id="pgPrev" aria-label="Previous page"><svg width="14" height="14" viewBox="0 0 16 16" aria-hidden="true"><path d="M10 3L5 8l5 5" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+        <span class="pg-num" id="pgNum" aria-live="polite"></span>
+        <button class="pill pg" id="pgNext" aria-label="Next page"><svg width="14" height="14" viewBox="0 0 16 16" aria-hidden="true"><path d="M6 3l5 5-5 5" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+        <button class="pill pg" id="pgZoom" aria-label="Enlarge page to read"><svg width="15" height="15" viewBox="0 0 16 16" aria-hidden="true"><circle cx="7" cy="7" r="4.5" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M10.5 10.5L14 14M7 5v4M5 7h4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></button>
+      </div>
+      <p class="zoom-hint" id="zoomHint" hidden>Click to enlarge.</p>
       <figcaption id="mCredit"></figcaption>
     </figure>
     <div class="m-text">
@@ -517,19 +569,26 @@
   </div>
 </div>
 
-<section id="finale" aria-labelledby="fTitle">
+<div id="pageZoom" role="dialog" aria-modal="true" aria-label="Enlarged program page">
+  <button class="pill" id="zoomClose" aria-label="Close enlarged page"><svg width="16" height="16" viewBox="0 0 16 16" aria-hidden="true"><path d="M3 3l10 10M13 3L3 13" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></button>
+  <img id="zoomImg" alt="" />
+</div>
+
+<section id="finale" role="dialog" aria-modal="true" aria-labelledby="fTitle">
   <div class="f-wrap">
     <div class="f-head">
       <h2 id="fTitle" tabindex="-1">Your path, <strong>as a floor plan</strong></h2>
-      <p class="f-sub">Your path through the archive, not a Dunham dance.</p>
+      <p class="f-sub">Your floor plan records the order you chose. It is not a reconstruction of Dunham&rsquo;s choreography.</p>
     </div>
 
     <div class="f-plan-grid">
-      <svg class="f-plan" id="fPlan" viewBox="0 0 400 292" role="img" aria-label=""></svg>
+      <div class="f-plan-col">
+        <svg class="f-plan" id="fPlan" viewBox="0 0 400 292" role="img" aria-label=""></svg>
+      </div>
       <div class="f-text">
         <ol class="f-seq" id="fSeq"></ol>
         <div class="f-actions">
-          <button class="pill primary" id="returnBtn">Main screen</button>
+          <button class="pill" id="returnBtn">Main screen</button>
           <button class="pill" id="restartBtn">Begin again</button>
         </div>
       </div>
@@ -540,11 +599,12 @@
 <div id="about" role="dialog" aria-modal="true" aria-labelledby="aTitle">
   <div class="a-card">
  <h2 id="aTitle">About</h2>
-    <p>Katherine Dunham (1909–2006) was a dancer, choreographer, anthropologist, author, educator, and activist. She brought the dances of the African diaspora to concert stages around the world, and she treated dance as a form of knowledge.</p>
-    <p>Much of that knowledge is preserved in the <a href="https://www.loc.gov/collections/katherine-dunham/" target="_blank" rel="noopener noreferrer">Katherine Dunham Collection at the Library of Congress</a>. Its photographs and moving images show how her choreography, research, and activism were connected.</p>
-    <p>"Project Title" invites you to explore that collection. Each point of light on the photograph opens an item from the archive. Touch them in any order, and the order you choose becomes a path across a stage floor that you can keep, or dance if you&rsquo;d like.</p>
-    <p>Your floor plan is your own path through the archive, not a Dunham dance.</p>
-    <p>Jemima Wright and Ysanne Johnson, interns in the Library of Congress’s Archives, History, and Heritage Advanced (AHHA) program, created this project with mentorship from Senior Innovation Specialist Kimber Thomas, as part of the Connecting Communities Digital Initiative (CCDI). Through archival research, interpretive design, and digital humanities methods, they aim to make the Library&rsquo;s collections more visible and to show how digital tools can bring unique historical records to a wider public.</p>
+    <p>Katherine Dunham (1909–2006) was a dancer, anthropologist, choreographer, writer, and activist. She brought the dances of the African diaspora to concert stages around the world, and she treated dance as a form of knowledge.</p>
+    <p>Much of that knowledge is preserved in the <a href="https://www.loc.gov/collections/katherine-dunham/" target="_blank" rel="noopener noreferrer">Katherine Dunham Collection at the Library of Congress</a>. Its photographs, films, and programs show how her choreography, research, and activism were connected.</p>
+    <p>[Title] is built on the 8-count, the basic unit dancers use to learn and build choreography. Eight points of light rest on the photograph of Dunham, and each one opens an item from the collection. Touch them in any order, and the order you choose becomes your own 8-count: a path across a stage floor that you can keep, or dance if you&rsquo;d like.</p>
+    <p>Your floor plan records the order you chose. It is not a reconstruction of Dunham&rsquo;s choreography.</p>
+    <p>Jemima Wright and Ysanne Johnson, interns in the Library of Congress&rsquo;s Archives, History, and Heritage Advanced (AHHA) program, created this prototype with mentorship from Senior Innovation Specialist Kimber Thomas, as part of the Connecting Communities Digital Initiative (CCDI). Through archival research, interpretive design, and digital humanities methods, they aim to make the Library&rsquo;s collections more visible and to show how digital tools can bring unique historical records to a wider public.</p>
+    <p>All items are from the Katherine Dunham Collection at the Library of Congress. Rights information for each item is available through its Library of Congress record or finding aid. Quotations are from <em>Kaiso! Writings by and about Katherine Dunham</em>, edited by VèVè A. Clark and Sara E. Johnson (University of Wisconsin Press, 2005).</p>
     <div class="a-actions"><button class="pill primary" id="aboutClose">Close</button></div>
   </div>
 </div>
@@ -558,22 +618,22 @@
 
     const MOMENTS = [
     {
-      at: [40, 24], spot: "her headwrap",
-      label: "The Mind", year: "1970s", place: "East St. Louis", short: "Dance as knowledge",
+      at: [33, 15], spot: "the fingertips of her raised hand",
+      label: "The Fingertips", cue: "Reach", year: "1970s", place: "East St. Louis", short: "Dance as knowledge",
       title: "Dance as a way <em>of knowing</em>",
       img: "images/dunham-museum-visitor.jpg", wide: true,
       alt: "Black-and-white photograph of Katherine Dunham, in a headscarf and patterned vest, guiding a young woman in a plaid dress as she balances a clay pot on her head. Carved figures and ceramics fill the room around them.",
       creditHtml: 'Photograph of Dunham and a visitor to the Katherine Dunham Museum. 1970s. Photograph. <a href="https://www.loc.gov/item/ihas.200003747/" target="_blank" rel="noopener noreferrer">https://www.loc.gov/item/ihas.200003747/</a>.',
       body: [
-        "Beginning in 1935, Dunham traveled to Jamaica, Martinique, Trinidad, and Haiti to study dance firsthand, learning from the communities who practiced it. She returned to Haiti throughout her life and kept a home there for decades.",
-        "She went on to share what she learned through teaching, performance, and writing. In this 1970s photograph, Dunham guides a visitor as she balances a vessel on her head, surrounded by objects from Dunham&rsquo;s collection."
+        "For Dunham, knowledge of dance was something to pass on. In 1967, she moved to East St. Louis, Illinois, where she founded the Performing Arts Training Center for Southern Illinois University. In 1977, she opened the Katherine Dunham Museum there to house her collection of instruments, textiles, carvings, and other objects gathered during her travels.",
+        "In this 1970s photograph, Dunham guides a visitor who balances a clay vessel on her head, surrounded by pieces from the collection."
       ],
     },
     {
-      at: [19, 29], spot: "her open hand",
-      label: "The Hand", year: "2002", place: "Interview", short: "Dance anthropology",
+      at: [19, 29], spot: "her open hand", tagSide: "l",
+      label: "The Hand", cue: "Lead with a hand", year: "2002", place: "Interview", short: "Dance anthropology",
       title: "The study of <em>movement</em>",
-      video: "video/dance-anthropology.mp4", coverAt: 8,
+      video: "video/dance-anthropology.mp4", coverAt: 8, captions: "video/dance-anthropology.vtt",
       alt: "Katherine Dunham on dance anthropology, video from the Katherine Dunham Collection, Library of Congress.",
       creditHtml: 'Katherine Dunham on dance anthropology. Library of Congress, September, 2002. Video. <a href="https://www.loc.gov/item/ihas.200003840/" target="_blank" rel="noopener noreferrer">https://www.loc.gov/item/ihas.200003840/</a>.',
       body: [
@@ -582,44 +642,67 @@
       ],
     },
     {
-      at: [46, 40], spot: "her heart",
-      label: "The Heart", year: "1983", place: "Washington, D.C.", short: "Activism",
+      at: [46, 40], spot: "her heart", tagSide: "r",
+      label: "The Heart", cue: "Pause", year: "1983", place: "Washington, D.C.", short: "Activism",
       title: "Art and <em>advocacy</em>",
       img: "images/dunham-kennedy-honors.jpg",
       alt: "Black-and-white photograph of President Ronald Reagan, in a tuxedo, smiling and shaking hands with Katherine Dunham, who wears an embroidered robe and a medal on a ribbon. A Marine in dress uniform stands between them.",
-      creditHtml: "President Ronald Reagan congratulates Katherine Dunham on her 1983 Kennedy Center Honors Award.",
+      creditHtml: 'President Ronald Reagan congratulates Katherine Dunham on her Kennedy Center Honors Award. 1983. Photograph. <a href="https://www.loc.gov/item/ihas.200003749/" target="_blank" rel="noopener noreferrer">https://www.loc.gov/item/ihas.200003749/</a>.',
       body: [
         "Dunham&rsquo;s activism ran alongside her work as an artist. She spoke out against segregated seating at her performances, including from the stage in Louisville in 1944. In 1950, after being refused a room at a S&atilde;o Paulo hotel, she spoke out publicly; she is often credited with helping to inspire the Afonso Arinos Law of 1951, Brazil&rsquo;s first law against racial discrimination in public places.",
-        "Her ballet <em>Southland</em> (1951) addressed racial injustice in the American South. In 1967 she moved to East St. Louis, where she founded the Performing Arts Training Center for Southern Illinois University. In 1983 she received the Kennedy Center Honors, a national award for lifetime contributions to the arts, and in 1992, at 82, she undertook a 47-day fast in support of Haitian refugees."
+        "Her ballet <em>Southland</em> (1951) addressed racial injustice in the American South. In 1983 she received the Kennedy Center Honors, a national award for lifetime contributions to the arts, and in 1992, at 82, she undertook a 47-day fast in support of Haitian refugees.",
+        { quote: "And if we are more lucky and more discerning, we realize that the only God is our discovered selves&hellip;", source: "Excerpt from the prologue to <em>Minefields</em>, <em>Kaiso! Writings by and about Katherine Dunham</em>" }
       ],
     },
     {
-      at: [83, 42], spot: "the sweep of her skirt",
-      label: "The Sweep", year: "1946", place: "New York", short: "Bal Nègre",
-      title: "A revue of the <em>diaspora</em>",
-      img: "images/dunham-bal-negre.jpg",
-      alt: "Black-and-white studio portrait of Katherine Dunham smiling, one hand on her hip, in a striped off-the-shoulder dress with lace ruffles and a matching striped head wrap.",
-      creditHtml: 'Katherine Dunham in <em>Bal N&egrave;gre</em>. 1946. Photograph. <a href="https://www.loc.gov/item/ihas.200003755/" target="_blank" rel="noopener noreferrer">https://www.loc.gov/item/ihas.200003755/</a>.',
+      at: [77, 75], spot: "the bend of her knee",
+      label: "The Bend", cue: "Lift your knees", year: "1943–1944", place: "Filmed in performance", short: "Sites of memory",
+      title: "A strut <em>with a history</em>",
+      video: "video/cakewalk.mp4", coverAt: 20,
+      alt: "Cakewalk, filmed performance from the Katherine Dunham Collection, Library of Congress.",
+      creditHtml: 'Cakewalk. 1943&ndash;1944. Video. <a href="https://www.loc.gov/item/ihas.200003812/" target="_blank" rel="noopener noreferrer">https://www.loc.gov/item/ihas.200003812/</a>.',
       body: [
-        "<em>Bal N&egrave;gre</em> opened at the Belasco Theatre in New York in 1946 and went on to tour with the Dunham company. It brought together dances from the Caribbean and Latin America with African American dance in a single evening, drawing in part on the forms Dunham had studied in her fieldwork.",
-        "Its costumes, like the ruffled skirt in the photograph behind these lights, were designed by John Pratt, Dunham&rsquo;s husband and longtime collaborator. In this studio portrait, Dunham wears a striped, off-the-shoulder dress with lace ruffles and a matching striped head wrap."
-      ],
+        "The cakewalk began among enslaved African Americans on Southern plantations. Its high-stepping strut is often described as a parody of the formal dances of slaveholders. By the late 19th century, it had become a popular stage and social dance across the United States.",
+  "This clip of Dunham&rsquo;s <em>Cakewalk</em> comes from 16mm film of her company&rsquo;s performances, recorded between 1943 and 1944.",
+  { quote: "Her [The Earth Mother] sons have forgotten the significance of this dance, but the blood of their ancestors is strong. They have not forgotten the dance.", source: "Excerpt from &ldquo;L&rsquo;Ag&rsquo;ya of Martinique,&rdquo; <em>Kaiso! Writings by and about Katherine Dunham</em>" }
+  ],
     },
     {
-      at: [24, 74], spot: "the hem of her skirt",
-      label: "The Hem", year: "1940", place: "New York", short: "Cabin in the Sky",
-      title: "Georgia Brown <em>on Broadway</em>",
-      img: "images/dunham-cabin-in-the-sky.jpg",
-      alt: "Sepia photograph of Katherine Dunham dancing between two drummers, one knee raised and her arms curved in front of her, wearing a tall headdress and a long fringed skirt.",
-      creditHtml: 'Katherine Dunham in the Broadway hit production of Cabin in the Sky, co-choreographed by Dunham and George Balanchine. 1940. Photograph. <a href="https://www.loc.gov/item/ihas.200003734/" target="_blank" rel="noopener noreferrer">https://www.loc.gov/item/ihas.200003734/</a>.',
+      at: [24, 76], spot: "the hem of her skirt",
+      label: "The Hem", cue: "Go low", year: "1944–1945", place: "On tour", short: "Research to performance",
+      title: "Tropical Revue <em>on tour</em>",
+      pages: [
+        { src: "images/program-1.jpg", alt: "Cover, with “Katherine Dunham” in script beside a photograph of Dunham and a male partner dancing, on a pale blue background." },
+        { src: "images/program-2.jpg", alt: "Page headed “S. Hurok presents…,” an essay on the impresario's quarter century of presenting dance and music." },
+        { src: "images/program-3.jpg", alt: "Title page: S. Hurok presents Katherine Dunham and her company in Tropical Revue, with Bobby Capo and the Dowdy Quartet, above a photograph of Dunham's face framed by two carved figures." },
+        { src: "images/program-4.jpg", alt: "Full-page photograph of Katherine Dunham in costume, with a flowered headdress and a sash." },
+        { src: "images/program-5.jpg", alt: "Essay titled “Katherine Dunham Ph.B., M.A., of Broadway, Hollywood and the University of Chicago,” with a small portrait of Dunham." },
+        { src: "images/program-6.jpg", alt: "The essay on Dunham continues in two columns of text." },
+        { src: "images/program-7.jpg", alt: "Full-page sketch of Dunham as the Woman with the Cigar in Tropics." },
+        { src: "images/program-8.jpg", alt: "The essay concludes, with a small photograph of Dunham in a flowered headdress." },
+        { src: "images/program-9.jpg", alt: "Rara Tonga: a photograph of Dunham and a male dancer, above a description of the number." },
+        { src: "images/program-10.jpg", alt: "Left half of a spread titled “Barrel House,” with a photograph of two dancers and a description of the number." },
+        { src: "images/program-11.jpg", alt: "Right half of the “Barrel House” spread, with photographs of the dancers and a line sketch of a couple." },
+        { src: "images/program-12.jpg", alt: "Tropics: photographs of Dunham as the Woman with the Cigar and of the company on stage." },
+        { src: "images/program-13.jpg", alt: "Bahiana: photographs of dancers in Brazilian-inspired costume, with a sketch of a dancer." },
+        { src: "images/program-14.jpg", alt: "Page titled “The Dances,” with notes on Rites, Jazz Hot, and Plantation Dances, and a photograph of the company." },
+        { src: "images/program-15.jpg", alt: "Photographs of singer Bobby Capo and the Dowdy Quartet, above portraits of the staff, including John Pratt." },
+        { src: "images/program-16.jpg", alt: "“The Dunham” company: a grid of portraits of the dancers." },
+        { src: "images/program-17.jpg", alt: "“Company,” continued: more portraits of the dancers." },
+        { src: "images/program-18.jpg", alt: "S. Hurok's Concert Hall of Fame: a collage of portraits of artists under Hurok's management." },
+        { src: "images/program-19.jpg", alt: "A list of Hurok attractions for the 1944–1945 season, including Katherine Dunham's Tropical Revue." },
+        { src: "images/program-20.jpg", alt: "Back page headed “Praise from the Critics,” with press quotes about the revue." }
+      ],
+      creditHtml: '<em>Tropical Revue</em> souvenir program, 1944&ndash;1945. Box: 17, Folder: 10. Katherine Dunham Collection, ML31.D985. Music Division, Library of Congress, Washington, D.C. <a href="https://hdl.loc.gov/loc.music/eadmus.mu018008" target="_blank" rel="noopener noreferrer">https://hdl.loc.gov/loc.music/eadmus.mu018008</a>',
       body: [
-        "<em>Cabin in the Sky</em> opened on October 25, 1940, at the Martin Beck Theatre in New York. Dunham danced the role of Georgia Brown and created the dances in collaboration with George Balanchine, with members of her company in the cast.",
-        "In this photograph she dances between two drummers, wearing a tall headdress and a long fringed skirt."
+        "<em>Tropical Revue</em> opened at the Martin Beck Theatre in New York in 1943, presented by the impresario S. Hurok, and the Dunham company then took it on tour.",
+        "This souvenir program from the 1944&ndash;1945 season introduces &ldquo;Katherine Dunham and her company,&rdquo; with photographs of numbers such as <em>Rara Tonga</em>, <em>Tropics</em>, and <em>Bahiana</em>, and portraits of the dancers and staff, including John Pratt, Dunham&rsquo;s husband and longtime designer. Its essay bills her as &ldquo;Katherine Dunham Ph.B., M.A., of Broadway, Hollywood and the University of Chicago,&rdquo; and its notes on the dances describe her as an anthropologist translating her research into theater.",
+        { quote: "Every person who has a germ of artistry seeks to recreate and present an impression of universal human experience.", source: "Excerpt from &ldquo;Thesis Turned Broadway,&rdquo; <em>Kaiso! Writings by and about Katherine Dunham</em>" }
       ],
     },
     {
-      at: [51, 49], spot: "her spine",
-      label: "The Spine", year: "1960", place: "Vienna", short: "Choros",
+      at: [52, 53], spot: "the curve of her back", tagSide: "r",
+      label: "The Spine", cue: "Turn", year: "1960", place: "Vienna", short: "Choros",
       title: "The backbone <em>of technique</em>",
       video: "video/choros.mp4", coverAt: 65,
       alt: "Choros, a clip from the 1960 television production Karibische Rhythmen, from the Katherine Dunham Collection, Library of Congress.",
@@ -630,28 +713,29 @@
       ],
     },
     {
-      at: [58, 82], spot: "her feet",
-      label: "The Feet", year: "1983", place: "Dunham Technique", short: "Technique",
+      at: [54, 89], spot: "the heel of her foot",
+      label: "The Feet", cue: "Travel", year: "1983", place: "Dunham Technique", short: "Technique",
       title: "Rooted to the <em>earth</em>",
-      video: "video/dunham-technique.mp4", coverAt: 30,
+      video: "video/dunham-technique.mp4", coverAt: 30, captions: "video/dunham-technique.vtt",
       alt: "Katherine Dunham on Dunham Technique, video from the Katherine Dunham Collection, Library of Congress.",
       creditHtml: 'Katherine Dunham on Dunham Technique. 1983. Video. <a href="https://www.loc.gov/item/ihas.200003814/" target="_blank" rel="noopener noreferrer">https://www.loc.gov/item/ihas.200003814/</a>.',
       body: [
         "In this 1983 recording, Dunham discusses contraction and release, and placing what she calls the palm of the foot flat on the floor. She describes contact with the floor, and with the earth, as the source of the movement.",
-        "Her teaching influenced generations of dancers."
+        "This clip was filmed in Haiti for the documentary <em>A Visit with Katherine Dunham</em> and features the Haitian dancer Rachel Tavernier."
       ],
     },
     {
-      at: [33, 42], spot: "the space beneath her raised arm, along the line that runs from crown to floor",
-      label: "The Axis", year: "2002", place: "Interview", short: "Pole through the body",
-      title: "A pole <em>through the body</em>",
-      video: "video/pole-through-the-body.mp4", coverAt: 8,
-      alt: "Katherine Dunham on the pole through the body in Dunham Technique, video from the Katherine Dunham Collection, Library of Congress.",
-      creditHtml: 'Katherine Dunham on the "pole through the body" in Dunham Technique. Library of Congress, September, 2002. Video. <a href="https://www.loc.gov/item/ihas.200003848/" target="_blank" rel="noopener noreferrer">https://www.loc.gov/item/ihas.200003848/</a>.',
+      at: [33, 34], spot: "beside her eye", tagSide: "r", bright: true,
+      label: "The Gaze", cue: "Change direction", year: "1936", place: "Trinidad", short: "Participant-observation",
+      title: "Fieldwork <em>in Trinidad</em>",
+      video: "video/trinidad-fieldwork.mp4", poster: "images/trinidad-poster.jpg",
+      alt: "Trinidad Fieldwork, 16mm film shot by Katherine Dunham in 1936, from the Katherine Dunham Collection, Library of Congress.",
+      creditHtml: 'Trinidad Fieldwork. 1936. Video. <a href="https://www.loc.gov/item/ihas.200003820/" target="_blank" rel="noopener noreferrer">https://www.loc.gov/item/ihas.200003820/</a>.',
       body: [
-        "In this 2002 recording, Dunham describes an image she called the pole through the body. She connects it to physical anthropology and the study of the human body.",
-        "In her account, the pole is the line through which the body&rsquo;s energy is released."
-      ],
+        "In 1935 and 1936, supported by a Rosenwald Fellowship, Dunham traveled to Jamaica, Martinique, Trinidad, and Haiti to study dance in the communities where it was practiced. Trained as an anthropologist, she worked as a participant-observer, watching closely and also taking part.",
+  "Dunham filmed this footage on 16mm in Trinidad in 1936. It shows calenda and banda dances performed outdoors, accompanied by male drummers and by women singing and playing maracas.",
+  { quote: "I learned about the people, how they dance, and especially, why.", source: "Excerpt from &ldquo;A Talk with Katherine Dunham,&rdquo; <em>Kaiso! Writings by and about Katherine Dunham</em>" }
+  ],
     }
   ];
 
@@ -773,7 +857,7 @@
   const marksEl = $("#marks");
   MOMENTS.forEach((m, i) => {
     const b = document.createElement("button");
-    b.className = "mark";
+    b.className = ["mark", m.tagSide && `tag-${m.tagSide}`, m.bright && "bright"].filter(Boolean).join(" ");
     b.style.left = m.at[0] + "%";
     b.style.top = m.at[1] + "%";
     b.style.transitionDelay = (0.3 + i * 0.15) + "s";
@@ -797,7 +881,7 @@
       el.textContent = k < state.order.length ? k + 1 : "";
     });
     $("#trailSr").textContent = state.order.length
-      ? `Moments touched so far: ${state.order.map((i) => MOMENTS[i].short).join(", ")}.`
+      ? `Lights touched so far: ${state.order.map((i) => MOMENTS[i].short).join(", ")}.`
       : "No moments touched yet.";
     $("#finishBtn").disabled = state.order.length === 0;
     const left = MOMENTS.length - state.order.length;
@@ -805,11 +889,70 @@
       ? "Lights rest on her photograph. Touch any of them, in any order."
       : left === 0
         ? "You have touched every moment. Finish whenever you are ready."
-        : `${left} moment${left === 1 ? "" : "s"} still waiting. Keep going, or finish whenever you are ready.`;
+        : `${left} light${left === 1 ? "" : "s"} still waiting. Keep going, or finish whenever you are ready.`;
   }
 
   const momentEl = $("#moment");
   const mImg = $("#mImg");
+  const pagesEl = $("#mPages");
+  let page = 0;
+
+  function showPage(n, dir) {
+    const pages = MOMENTS[state.open].pages;
+    page = Math.max(0, Math.min(pages.length - 1, n));
+    mImg.classList.remove("loaded");
+    mImg.classList.toggle("back", dir < 0);
+    const p = pages[page];
+    const swap = () => {
+      mImg.onload = () => requestAnimationFrame(() => mImg.classList.add("loaded"));
+      mImg.alt = p.alt;
+      mImg.src = p.src;
+      if (mImg.complete && mImg.naturalWidth) requestAnimationFrame(() => mImg.classList.add("loaded"));
+    };
+    if (mImg.getAttribute("src") && !reduceMotion) setTimeout(swap, 220); else swap();
+    $("#pgNum").textContent = `Page ${page + 1} of ${pages.length}`;
+    $("#pgPrev").disabled = page === 0;
+    $("#pgNext").disabled = page === pages.length - 1;
+  }
+  $("#pgPrev").addEventListener("click", () => showPage(page - 1, -1));
+  $("#pgNext").addEventListener("click", () => showPage(page + 1, 1));
+
+  const isBook = () => state.open !== null && !!MOMENTS[state.open].pages;
+
+  const zoomEl = $("#pageZoom");
+  const zoomImg = $("#zoomImg");
+  let zoomReturn = null;
+  function openZoom() {
+    if (!isBook()) return;
+    const p = MOMENTS[state.open].pages[page];
+    zoomImg.src = p.src;
+    zoomImg.alt = p.alt;
+    zoomReturn = document.activeElement;
+    zoomEl.classList.add("open");
+    zoomEl.scrollTop = 0;
+    $("#zoomClose").focus();
+  }
+  function closeZoom() {
+    zoomEl.classList.remove("open");
+    (zoomReturn || $("#pgZoom")).focus();
+  }
+  mImg.addEventListener("click", openZoom);
+  $("#pgZoom").addEventListener("click", openZoom);
+  $("#zoomClose").addEventListener("click", closeZoom);
+  zoomImg.addEventListener("click", closeZoom);
+  const aboutEl = $("#about");
+  let momentOpens = 0;
+
+  // Only the topmost open layer stays reachable; everything behind it is made inert.
+  function syncLayers() {
+    const top = [aboutEl, finaleEl, momentEl].find((el) => el.classList.contains("open")) || null;
+    document.body.classList.toggle("layer-open", !!top);
+    for (const el of document.body.children) {
+      if (el.tagName === "SCRIPT" || el.hasAttribute("aria-live") || el.getAttribute("role") === "status") continue;
+      el.inert = !!top && el !== top && !el.contains(top);
+    }
+  }
+
   function openMoment(i) {
     const m = MOMENTS[i];
     state.open = i;
@@ -824,13 +967,29 @@
     vid.classList.remove("show");
     momentEl.querySelector(".m-card").classList.toggle("has-video", !!m.video);
     momentEl.querySelector(".m-card").classList.toggle("is-wide", !!m.wide);
-    if (m.video) {
+    momentEl.querySelector(".m-card").classList.toggle("is-book", !!m.pages);
+    pagesEl.hidden = !m.pages;
+    $("#zoomHint").hidden = !m.pages;
+    mImg.classList.remove("back");
+    if (m.pages) {
+      mImg.style.display = "";
+      m.pages.slice(1).forEach((p) => { new Image().src = p.src; });
+      showPage(0, 1);
+    } else if (m.video) {
       mImg.style.display = "none";
       vid.setAttribute("aria-label", m.alt);
       if (vid.getAttribute("src") !== m.video) {
         vid.preload = "metadata";
+        if (m.poster) vid.poster = m.poster; else vid.removeAttribute("poster");
+        vid.querySelectorAll("track").forEach((t) => t.remove());
+        if (m.captions) {
+          const track = document.createElement("track");
+          Object.assign(track, { kind: "captions", srclang: "en", label: "English", src: m.captions, default: true });
+          vid.appendChild(track);
+          track.track.mode = "showing";
+        }
         vid.src = m.video;
-        if (m.coverAt) {
+        if (m.coverAt && !m.poster) {
           vid.addEventListener("loadedmetadata", () => { vid.currentTime = m.coverAt; }, { once: true });
           vid.addEventListener("play", () => { vid.currentTime = 0; }, { once: true });
         }
@@ -846,12 +1005,17 @@
     $("#mCredit").innerHTML = m.creditHtml;
     $("#mMeta").textContent = [m.year, m.place].filter(Boolean).join(" · ");
     $("#mTitle").innerHTML = m.title;
-    $("#mBody").innerHTML = m.body.map((p) => `<p>${p}</p>`).join("");
+    $("#mBody").innerHTML = m.body.map((p) => typeof p === "string"
+      ? `<p>${p}</p>`
+      : `<figure class="m-quote"><blockquote><p>&ldquo;${p.quote}&rdquo;</p></blockquote><figcaption>${p.source}</figcaption></figure>`
+    ).join("");
   
     momentEl.classList.remove("open");
+    momentEl.classList.toggle("repeat", momentOpens++ > 0);
     void momentEl.offsetWidth;
     momentEl.classList.add("open");
     momentEl.querySelector(".m-card").scrollTop = 0;
+    syncLayers();
     setTimeout(() => $("#mBack").focus({ preventScroll: true }), 60);
   }
   function closeMoment() {
@@ -859,6 +1023,7 @@
     $("#mVid").pause();
     momentEl.classList.remove("open");
     state.open = null;
+    syncLayers();
     if (state.order.length === MOMENTS.length) setTimeout(() => $("#finishBtn").focus(), 400);
     else if (state.lastFocus) state.lastFocus.focus({ preventScroll: true });
   }
@@ -868,18 +1033,7 @@
 
   const finaleEl = $("#finale");
 
-  const CUES = {
-    "The Hand": "Lead with a hand",
-    "The Feet": "Travel",
-    "The Sweep": "Make your biggest shape",
-    "The Hem": "Go low",
-    "The Heart": "Pause",
-    "The Spine": "Turn",
-    "The Mind": "Change direction",
-    "The Axis": "Stand tall and spin",
-  };
-
-  const planLabel = () => `A stage floor plan seen from above. Your path enters from the wing, passes ${state.order.map((i, k) => `${k + 1}, ${MOMENTS[i].label}: ${CUES[MOMENTS[i].label]}`).join("; ")}, and exits.`;
+  const planLabel = () => `A stage floor plan seen from above. Your path enters from the wing, passes ${state.order.map((i, k) => `${k + 1}, ${MOMENTS[i].label}: ${MOMENTS[i].cue}`).join("; ")}, and exits.`;
 
   function openFinale() {
     if (!state.order.length) return;
@@ -888,14 +1042,20 @@
     svg.setAttribute("aria-label", planLabel());
     const edge = (txt) => `<li aria-hidden="true"><span class="edge"><span></span></span>${txt}</li>`;
     $("#fSeq").innerHTML = edge("Enter")
-      + state.order.map((i, k) => `<li><span class="n">${k + 1}</span><span>${MOMENTS[i].label}<span class="cue">${CUES[MOMENTS[i].label]}</span></span></li>`).join("")
+      + state.order.map((i, k) => `<li><span class="n">${k + 1}</span><span>${MOMENTS[i].label}<span class="cue">${MOMENTS[i].cue}</span></span></li>`).join("")
       + edge("Exit");
 
     finaleEl.classList.add("open");
     finaleEl.scrollTop = 0;
+    syncLayers();
     setTimeout(() => $("#fTitle").focus(), 50);
   }
-  function closeFinale() { finaleEl.classList.remove("open"); }
+  function closeFinale() {
+    finaleEl.classList.remove("open");
+    syncLayers();
+    const finishBtn = $("#finishBtn");
+    (finishBtn.disabled ? marksEl.firstElementChild : finishBtn).focus({ preventScroll: true });
+  }
   $("#finishBtn").addEventListener("click", openFinale);
   $("#returnBtn").addEventListener("click", closeFinale);
   $("#restartBtn").addEventListener("click", () => {
@@ -911,9 +1071,10 @@
     clearTimeout(toastT); toastT = setTimeout(() => t.classList.remove("show"), 2400);
   }
 
-  const aboutEl = $("#about");
-  $("#aboutBtn").addEventListener("click", () => { aboutEl.classList.add("open"); $("#aboutClose").focus(); });
-  $("#aboutClose").addEventListener("click", () => { aboutEl.classList.remove("open"); $("#aboutBtn").focus(); });
+  function openAbout() { aboutEl.classList.add("open"); syncLayers(); setTimeout(() => $("#aboutClose").focus(), 50); }
+  function closeAbout() { aboutEl.classList.remove("open"); syncLayers(); $("#aboutBtn").focus(); }
+  $("#aboutBtn").addEventListener("click", openAbout);
+  $("#aboutClose").addEventListener("click", closeAbout);
 
   // Drum: a quiet pulse that adds a layer with each moment opened.
   let ac = null, master = null, soundOn = false, nextT = 0, step = 0, layers = 1, timer = null;
@@ -980,10 +1141,24 @@
   }, { passive: true });
 
   document.addEventListener("keydown", (e) => {
+    if (zoomEl.classList.contains("open")) {
+      if (e.key === "Escape") closeZoom();
+      else if (e.key === "Tab") { e.preventDefault(); $("#zoomClose").focus(); }
+      else if (e.key === "ArrowLeft" || e.key === "ArrowRight") {
+        const d = e.key === "ArrowRight" ? 1 : -1;
+        showPage(page + d, d);
+        const p = MOMENTS[state.open].pages[page];
+        zoomImg.src = p.src; zoomImg.alt = p.alt; zoomEl.scrollTop = 0;
+      }
+      return;
+    }
     if (e.key === "Escape") {
-      if (aboutEl.classList.contains("open")) { aboutEl.classList.remove("open"); $("#aboutBtn").focus(); }
+      if (aboutEl.classList.contains("open")) closeAbout();
       else if (state.open !== null) closeMoment();
       else if (finaleEl.classList.contains("open")) closeFinale();
+    }
+    if ((e.key === "ArrowLeft" || e.key === "ArrowRight") && state.open !== null && MOMENTS[state.open].pages) {
+      showPage(page + (e.key === "ArrowRight" ? 1 : -1), e.key === "ArrowRight" ? 1 : -1);
     }
     if (e.key === "Tab" && state.open !== null) {
       const f = [...momentEl.querySelectorAll("button")];
@@ -994,6 +1169,25 @@
   });
 
   updatePath();
+
+  // A tiny, darkened, grayscale copy of the photo, stretched to fill the screen, reads as a soft blur without a live CSS blur filter.
+  (() => {
+    const img = new Image();
+    img.onload = () => {
+      const w = 24, h = Math.round(24 * img.naturalHeight / img.naturalWidth);
+      const c = document.createElement("canvas"); c.width = w; c.height = h;
+      const ctx = c.getContext("2d");
+      ctx.drawImage(img, 0, 0, w, h);
+      const d = ctx.getImageData(0, 0, w, h), px = d.data;
+      for (let i = 0; i < px.length; i += 4) {
+        const g = (px[i] * .3 + px[i + 1] * .59 + px[i + 2] * .11) * .32;
+        px[i] = px[i + 1] = px[i + 2] = g;
+      }
+      ctx.putImageData(d, 0, 0);
+      $("#ambient").style.backgroundImage = `url(${c.toDataURL()})`;
+    };
+    img.src = "images/dunham-skirt.jpg";
+  })();
 
   const curtainEl = $("#curtain");
   let curtainRaised = false;
